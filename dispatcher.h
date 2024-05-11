@@ -41,10 +41,18 @@ struct handler {
 };
 typedef struct handler handler;
 
+#define INSTALL_CHAIN(NAME) \
+  void install_##NAME##_chain() __attribute__((constructor)); \
+  void install_##NAME##_chain() \
+  { \
+    add_handler(NAME); \
+  }
+
 #define START_HANDLER(NAME, METHOD, REGEX, RES, NUM, MATCHES) \
 void NAME##_func(); \
 handler NAME##_data = {NAME##_func, METHOD, REGEX, {0}, NUM, NULL}; \
 handler *NAME = &NAME##_data; \
+INSTALL_CHAIN(NAME); \
 void NAME##_func(regmatch_t MATCHES[]) { \
     response *int_response = response_empty(); \
     response *RES = int_response;

@@ -30,8 +30,8 @@ START_HANDLER (default_handler, GET, "", res, 0, matches) {
 } END_HANDLER
 
 int main() {
-    add_handler(simple);
-    add_handler(default_handler);
+    // add_handler(simple);
+    // add_handler(default_handler);
     serve_forever();
     return 0;
 }
