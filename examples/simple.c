@@ -30,8 +30,12 @@ START_HANDLER (default_handler, GET, "", res, 0, matches) {
 } END_HANDLER
 
 int main() {
+#if defined(__GNUC__) || defined(__clang__)
+    // Handlers are auto-registered via constructor
+#else
     add_handler(simple);
     add_handler(default_handler);
+#endif
     serve_forever();
     return 0;
 }
